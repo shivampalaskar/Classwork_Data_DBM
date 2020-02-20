@@ -1,0 +1,28 @@
+mysql -u root -p
+SELECT USER(); -- To show current user
+
+SELECT USER FROM DUAL; -- Not working
+
+SELECT USER FROM mysql.user; -- To show all user present in mysql.user database
+
+CREATE USER 'dac'@'localhost' IDENTIFIED BY 'dac';
+	-- To create new user
+	-- username : dac
+	-- password : dac
+
+--To check permission for user 
+	SHOW GRANTS FOR dac;
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+

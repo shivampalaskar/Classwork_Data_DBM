@@ -1,0 +1,167 @@
+mysql -u root -p
+SELECT USER();
+SELECT USER FROM mysql.user;
+CREATE USER 'dac'@'localhost' IDENTIFIED BY 'dac';
+SHOW GRANTS FOR 'dac'@'localhost';
+
+CREATE DATABASE spj;
+
+GRANT 
+ALL PRIVILEGES 
+ON spj.* 
+TO 'dac'@'localhost';
+
+EXIT;
+
+mysql -u dac -p
+
+SHOW DATABASES;
+USE spj;
+
+CREATE TABLE S 
+(`S#` CHAR(5) NOT NULL, Sname CHAR(20), Status SMALLINT, City CHAR(15));
+
+DESCRIBE S;
+
+INSERT INTO S
+(`S#`,Sname,Status,City)
+VALUES
+('S1','Smith',20,'London');  -- For string give 'STRING' or "STRING" and for int direct use digits 
+
+INSERT INTO S
+VALUES
+('S2','Jones',10,'Paris');
+
+INSERT INTO S
+VALUES
+('S4','Clark',20,'London');
+
+INSERT INTO S
+VALUES
+('S5','Adams',30,'Athens');
+
+SHOW TABLES;
+SELECT * FROM S;
+
+CREATE TABLE P
+(`P#` CHAR(6) NOT NULL, Pname CHAR(20), Color CHAR(20), WEIGHT SMALLINT, City CHAR(15));
+
+INSERT INTO P
+(`P#`,Pname,Color,WEIGHT, City)
+VALUES
+('P1','Nut','Red',12,'London');
+
+INSERT INTO P
+(`P#`,Pname,Color,Weight, City)  -- Weight (Column name) is case insensitive 
+VALUES
+('P2','Bolt','Green',17,'Paris');
+
+INSERT INTO P
+VALUES
+('P3','Screw','Blue',17,'Rome');
+
+INSERT INTO P
+VALUES
+('P4','Screw','Red',14,'London');
+
+INSERT INTO P
+VALUES
+('P5','Cam','Blue',12,'Paris');
+
+INSERT INTO P
+VALUES
+('P6','Cog','Red',19,'London');
+
+SELECT * FROM P;
+
+CREATE TABLE J
+(`J#` CHAR(4) NOT NULL, Jname CHAR(10),City CHAR(15));
+
+INSERT INTO J
+VALUES
+('J1','Sorter','Paris'),
+('J2','Punch','Rome'),
+('J3','Reader','Athens'),
+('J4','Console','Athens'),
+('J5','Collator','London'),
+('J6','Terminal','Oslo'),
+('J7','Tape','London');
+
+SELECT * FROM J;
+
+CREATE TABLE sp
+(`S#` CHAR(4) NOT NULL,
+`P#` CHAR(4) NOT NULL,
+`J#` CHAR(4) NOT NULL, QTY INT);
+
+INSERT INTO sp
+VALUES
+('S1','P1','J1',200),
+('S1','P1','J4',700),
+('S2','P3','J1',400),
+('S2','P3','J2',200),
+('S2','P3','J3',200),
+('S2','P3','J4',500),
+('S2','P3','J5',600),
+('S2','P3','J6',400),
+('S2','P3','J7',800),
+('S2','P5','J2',100),
+('S3','P3','J1',200),
+('S3','P4','J2',500),
+('S4','P6','J3',300),
+('S4','P6','J7',300),
+('S5','P2','J2',200),
+('S5','P2','J4',100),
+('S5','P5','J5',500),
+('S5','P5','J7',100),
+('S5','P6','J2',200),
+('S5','P1','J4',100),
+('S5','P3','J4',200),
+('S5','P4','J4',800),
+('S5','P5','J4',400),
+('S5','P6','J4',500);
+
+SELECT * FROM sp;
+
+CREATE DATABASE classwork;
+
+GRANT 
+ALL PRIVILEGES
+ON classwork.* 
+TO 'dac'@'localhost';
+
+USE classwork;
+
+SOURCE --drang and drop classwork.sql file on terminal
+
+CREATE DATABASE hr;
+
+GRANT 
+ALL PRIVILEGES 
+ON hr.*
+TO 'dac'@'localhost';
+
+SOURCE --drang and drop hr.sql file on terminal
+
+CREATE DATABASE sales;
+
+GRANT 
+ALL PRIVILEGES
+ON sales.*
+TO 'dac'@'localhost';
+
+SOURCE --drang and drop sales.sql file on terminal
+
+GRANT 
+ALL PRIVILEGES
+ON northwind.*
+TO 'dac'@'localhost';
+
+SOURCE --drang and drop northwind.sql file on terminal
+
+mysql -u dac -p
+
+SHOW DATABASES;
+
+
+

@@ -1,0 +1,398 @@
+mysql -u root -p
+
+SHOW DATABASES;
+USE hr;
+SHOW TABLES;
+
+SELECT * FROM employees;
+
+SELECT 
+FIRST_NAME AS 'First Name',
+LAST_NAME AS 'Last Name' 
+FROM employees;
+
+SELECT DISTINCT DEPARTMENT_ID FROM employees;
+
+SELECT * FROM employees
+ORDER BY FIRST_NAME DESC;
+
+SELECT FIRST_NAME,LAST_NAME,SALARY,SALARY*.15 AS PF FROM employees;
+
+SELECT 
+EMPLOYEE_ID,FIRST_NAME,LAST_NAME,SALARY 
+FROM employees
+ORDER BY SALARY ASC; 
+
+SELECT 
+SUM(SALARY) AS 'Total Salary' 
+FROM employees;
+
+SELECT 
+MAX(SALARY) AS 'Max Salary', 
+MIN(SALARY) AS 'Min Salary' 
+FROM employees;
+
+SELECT 171*214+625 FROM DUAL;
+
+SELECT CONCAT(FIRST_NAME,' ',LAST_NAME) FROM employees;
+
+SELECT * FROM employees LIMIT 10;
+
+SELECT 
+FIRST_NAME,HIRE_DATE 
+FROM employees
+WHERE JOB_ID='IT_PROG' OR JOB_ID='SA_MAN';
+
+SELECT * 
+FROM employees
+WHERE EMPLOYEE_ID=150 OR EMPLOYEE_ID=160;
+
+SELECT 
+FIRST_NAME,SALARY,COMMISSION_PCT,HIRE_DATE
+FROM employees
+WHERE SALARY<10000;
+
+SELECT FIRST_NAME,LAST_NAME
+FROM employees
+WHERE FIRST_NAME LIKE 'S%' OR LAST_NAME LIKE 'S%';
+
+SELECT * 
+FROM jobs
+ORDER BY JOB_TITLE DESC;
+
+--16
+SELECT COMMISSION_PCT,SALARY,DEPARTMENT_ID 
+FROM employees
+WHERE 
+COMMISSION_PCT IS NULL AND
+SALARY>=500 AND SALARY<=10000 AND
+DEPARTMENT_ID =30; 
+
+--17 WRONG QUESTION
+SELECT FIRST_NAME,EMAIL
+FROM employees
+
+SELECT DISTINCT COUNTRY_ID FROM locations;
+
+SELECT * 
+FROM employees	
+WHERE JOB_ID = 'IT_PROG' AND
+JOB_ID = 'FI_ACCOUNT';
+
+SELECT * 
+FROM countries
+ORDER BY COUNTRY_NAME ASC;
+
+SHOW DATABASES;
+USE spj;
+
+SHOW TABLES;
+
+SELECT * FROM S;
+
+SELECT `S#`,Sname
+FROM S;
+
+SELECT Pname,Color
+FROM P
+WHERE City = 'London';
+
+SELECT Sname 
+FROM S
+WHERE City = 'London';
+
+SELECT Sname 
+FROM S
+WHERE City = 'London' OR
+City = 'Paris' OR 
+City = 'Athens';
+
+--6 ?
+
+SELECT Pname
+FROM P
+WHERE 
+WEIGHT BETWEEN 12 AND 14; -- BETWEEN includes 12 and 14 also
+
+SELECT * 
+FROM S
+WHERE Status>=20;
+
+SELECT *
+FROM S
+WHERE CITY != 'London';
+
+--10 ?
+
+SELECT 
+WEIGHT,WEIGHT*1000 AS MILIGRAMS,
+WEIGHT/1000 AS KILOGRAMS
+FROM P;
+
+SELECT * 
+FROM S
+ORDER BY City;
+
+SELECT * 
+FROM P
+ORDER BY City,Pname;
+
+SELECT * 
+FROM S
+WHERE Status BETWEEN 10 AND 20;
+
+-- 15 Incomplete Question
+
+USE northwind;
+
+SELECT ProductName,QuantityPerUnit
+FROM Products;
+
+SELECT ProductID,ProductName
+FROM Products;
+
+SELECT 
+ProductID,ProductName,UnitPrice
+FROM Products
+WHERE UnitPrice<20;
+
+SELECT 
+ProductID,ProductName,UnitPrice
+FROM Products
+WHERE UnitPrice BETWEEN 15 AND 25;
+
+SELECT AVG(UnitPrice) FROM Products;
+
+--5 ?
+
+SELECT CategoryName,Description FROM Categories;
+
+SELECT 
+ContactName,CompanyName,ContactTitle,Phone 
+FROM Customers;
+
+SELECT EmployeeID,Title,FirstName,LastName,Region FROM Employees;
+
+SELECT 
+RegionID,RegionDescription
+FROM 
+Region;
+
+SELECT 
+CompanyName,Fax,Phone,HomePage
+FROM Suppliers;
+
+SELECT 
+CategoryName,Description
+FROM Categories
+ORDER BY CategoryName;
+
+SELECT 
+ContactName,CompanyName,ContactTitle,Phone
+FROM Customers
+ORDER BY Phone;  -- First NULL, Then (), Then Plain Numbers
+
+SELECT 
+FirstName,LastName,HireDate
+FROM Employees
+ORDER BY HireDate DESC;  -- 1994 First Then 1992
+
+SELECT 
+OrderID,OrderDate,ShippedDate,CustomerID,Freight
+FROM Orders
+ORDER BY Freight DESC;
+
+SELECT 
+CompanyName,Fax,Phone,HomePage,Country
+FROM Suppliers
+ORDER BY Country DESC,CompanyName;
+
+SELECT 
+Title,FirstName,LastName
+FROM Employees
+ORDER BY Title ASC,LastName DESC;
+
+-- 17 ?
+
+SELECT *
+FROM Products
+WHERE
+UnitsInStock = 0;
+
+SELECT 
+OrderDate,ShippedDate,CustomerID,Freight
+FROM Orders
+WHERE OrderDate = 19970519; 
+--It may or may not, it entirely depends on upon data in your table. When you only provide date part of a DateTime variable, it uses '00:00:00.000' for time part.
+
+SELECT 
+CompanyName,CompanyName,Fax
+FROM Customers
+WHERE Fax IS NOT NULL;
+
+SELECT 
+FirstName,LastName
+FROM Employees
+WHERE ReportsTo IS NULL;
+
+USE sales;
+
+--1
+--2
+--3
+--4
+
+SELECT onum,amt,odate FROM ORDERS;
+
+SELECT *
+FROM CUSTOMERS
+WHERE snum = 1001;
+
+SELECT city,sname,snum,comm FROM SALESPEOPLE;
+
+SELECT cname,rating FROM CUSTOMERS WHERE city = 'San Jose';
+
+--9
+
+SELECT * FROM ORDERS WHERE amt>1000;
+
+SELECT sname,city FROM SALESPEOPLE WHERE city='London' AND comm>0.10;
+
+SELECT * FROM CUSTOMERS WHERE rating != 100 OR city = 'Rome';
+
+SELECT * 
+FROM ORDERS 
+WHERE (amt < 1000 OR NOT (odate = '1990-10-03' AND cnum >2003));
+
+SELECT * 
+FROM ORDERS
+WHERE NOT((odate = '1990-10-03' OR snum>1006) AND amt>=1500);
+
+SELECT * 
+FROM SALESPEOPLE 
+WHERE comm = .13;
+
+--16
+
+SELECT * 
+FROM ORDERS 
+WHERE NOT (amt IS NULL OR amt =0);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

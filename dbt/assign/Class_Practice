@@ -1,0 +1,213 @@
+mysql -u dac -p
+
+USE classwork;
+
+
+CROSS JOIN:
+
+SELECT e.ename,d.dname
+FROM EMP e CROSS JOIN DEPT d;
+====OR=====
+SELECT ename,dname
+FROM EMP CROSS JOIN DEPT;
+=====OR=====
+SELECT ename,dname
+FROM EMP,DEPT;
+
+INNER JOIN:
+
+SELECT e.ename,d.dname
+FROM EMP e INNER JOIN DEPT d; -- THIS WORKS LIKE OUTER JOIN
+
+SELECT e.ename,d.dname
+FROM EMP e INNER JOIN DEPT d
+ON e.deptno = d.deptno; 
+=====OR=====
+SELECT ename,dname
+FROM EMP,DEPT
+WHERE deptno = deptno; -- FOR THIS REASON WE NEED TABLE_NAME.COLUMN_NAME SCHEME
+=====OR=====
+SELECT ename,dname
+FROM EMP,DEPT
+WHERE EMP.deptno = DEPT.deptno;
+=====OR=====
+SELECT ename,dname
+FROM EMP e,DEPT d
+WHERE e.deptno = d.deptno; -- ALIAS FOR TABLE NAME
+
+LEFT OUTER JOIN:
+
+SELECT e.ename,d.dname 
+FROM EMP e LEFT OUTER JOIN DEPT d
+ON e.deptno=d.deptno;
+
+SELECT e.ename,d.dname 
+FROM DEPT d LEFT OUTER JOIN EMP e 
+ON e.deptno=d.deptno;
+
+FULL JOIN:
+
+SELECT e.ename,d.dname
+FROM EMP e LEFT OUTER JOIN DEPT d
+ON e.deptno=d.deptno;
+
+SELECT e.ename,d.dname 
+FROM EMP e RIGHT OUTER JOIN DEPT d
+ON e.deptno = d.deptno;
+
+
+SELECT e.ename,d.dname
+FROM EMP e LEFT OUTER JOIN DEPT d
+ON e.deptno=d.deptno
+UNION
+SELECT e.ename,d.dname 
+FROM EMP e RIGHT OUTER JOIN DEPT d
+ON e.deptno = d.deptno;
+
+SELECT e.ename,d.dname
+FROM EMP e LEFT OUTER JOIN DEPT d
+ON e.deptno=d.deptno
+UNION ALL
+SELECT e.ename,d.dname 
+FROM EMP e RIGHT OUTER JOIN DEPT d
+ON e.deptno = d.deptno;
+
+SELF JOIN:
+
+SELECT e1.ename,e2.ename
+FROM EMP e1 INNER JOIN EMP e2
+ON e1.mgr = e2.empno;
+
+TABLE RELATIONS:
+
+CREATE TABLE dept
+(
+	deptno INT,
+	dname VARCHAR(50),
+	CONSTRAINT PK_DEPT_DEPTNO
+	PRIMARY KEY(deptno)
+);
+INSERT INTO dept
+VALUES
+( 10,'DEV'),
+( 20,'QA'),
+( 30,'ACCOUNT'),
+( 40,'OPERATIONS');
+
+
+SELECT em.id,em.meetno,em.empno,m.topic,m.venue,e.ename,e.deptno
+FROM meeting m INNER JOIN emp_meeting em
+ON m.meetno = em.meetno
+INNER JOIN emp e
+ON em.empno = e.empno;
+
+
+
+SELECT em.id,em.meetno,em.empno,m.topic,m.venue,e.ename,e.deptno
+FROM emp_meeting em INNER JOIN meeting m
+ON m.meetno = em.meetno
+INNER JOIN emp e
+ON em.empno = e.empno;
+
+********************************************************************************
+
+CREATE TABLE no_primary_key_table
+(	
+	id INT,				-- NO PRIMARY KEY
+	name VARCHAR(10)
+);
+
+CREATE TABLE foreign_key_table
+(
+	id INT,
+	address VARCHAR(20),
+	CONSTRAINT FK_ON_FKID_NOPKID FOREIGN KEY (id) REFERENCES no_primary_key_table(id)
+);   -- Failed to add the foreign key constraint. Missing index for constraint 'FK_ON_FKID_NOPKID' in the referenced table 'no_primary_key_table'
+
+================================================================================
+
+CREATE TABLE no_primary_key_table
+(	
+	id INT PRIMARY KEY,				-- IT MUST BE ATTRIBUTED WITH PRIMARY KEY FOR TO REFEENCED BY OTHER TABLES FOREIGN KEY
+	name VARCHAR(10)
+);
+
+CREATE TABLE foreign_key_table
+(
+	id INT,
+	address VARCHAR(20),
+	CONSTRAINT FK_ON_FKID_NOPKID FOREIGN KEY (id) REFERENCES no_primary_key_table(id)
+);   -- OK
+**********************************************************************************
+
+
+
+Q.Print meeting topic and employee names and their addresses
+
+SELECT m.topic,e.ename,a.loc
+FROM meeting m INNER JOIN emp_meeting em
+ON m.meetno = em.meetno
+INNER JOIN emp e
+ON em.empno = e.empno
+INNER JOIN address a
+ON e.empno = a.empno;
+
+Q.Print meeting topic and enames and their depts
+
+SELECT m.topic,em.empno,e.ename,d.dname
+FROM meeting m INNER JOIN emp_meeting em
+ON m.meetno = em.meetno
+INNER JOIN emp e
+ON e.empno = em.empno
+INNER JOIN dept d
+ON d.deptno = e.deptno;
+
+SELECT d.DEPARTMENT_NAME,e.FIRST_NAME AS MANAGER_NAME,d.MANAGER_ID
+FROM employees e INNER JOIN departments d
+ON d.MANAGER_ID = e.EMPLOYEE_ID;
+
+***********
+
+SELECT MONTH(e.HIRE_DATE)
+FROM locations l INNER JOIN departments d
+ON l.LOCATION_ID = d.LOCATION_ID
+INNER JOIN employees e
+ON e.DEPARTMENT_ID = d.DEPARTMENT_ID
+WHERE l.CITY='Seattle'
+GROUP BY MONTH(e.HIRE_DATE)
+HAVING COUNT(EMPLOYEE_ID)>5;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

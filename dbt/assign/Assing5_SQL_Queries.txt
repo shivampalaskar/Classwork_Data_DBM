@@ -1,0 +1,188 @@
+-- 1) Display department name and manager first name
+SELECT d.DEPARTMENT_NAME,e.FIRST_NAME AS MANAGER_NAME
+FROM employees e INNER JOIN departments d
+ON d.MANAGER_ID = e.EMPLOYEE_ID;
+
+-- 2) Display department name manager name and city
+
+SELECT d.DEPARTMENT_NAME,e.FIRST_NAME AS MANAGER_NAME,l.CITY
+FROM departments d INNER JOIN employees e
+ON d.MANAGER_ID = e.EMPLOYEE_ID
+INNER JOIN locations l
+ON d.LOCATION_ID = l.LOCATION_ID;
+
+-- 3) Display country name city and department name
+
+SELECT c.COUNTRY_NAME,l.CITY,d.DEPARTMENT_NAME
+FROM countries c INNER JOIN locations l
+ON c.COUNTRY_ID = l.COUNTRY_ID
+INNER JOIN departments d
+ON d.LOCATION_ID = l.LOCATION_ID;
+
+-- 4) Display job title,department name,employee last name, starting date for all jobs from 2000 to 2005
+
+SELECT j.JOB_TITLE,d.DEPARTMENT_NAME,e.LAST_NAME,jh.START_DATE
+FROM job_history jh INNER JOIN jobs j
+ON jh.JOB_ID = j.JOB_ID
+INNER JOIN departments d
+ON d.DEPARTMENT_ID = jh.DEPARTMENT_ID
+INNER JOIN employees e
+ON jh.EMPLOYEE_ID = e.EMPLOYEE_ID
+WHERE YEAR(jh.START_DATE) BETWEEN 2000 AND 2005; -- EMPTY SET, *USE 1987 TO 1994
+
+-- 5) Display job title and average salary of employees
+
+SELECT j.JOB_ID,j.JOB_TITLE,AVG(e.SALARY) AS AVEGRAE_SALARY
+FROM jobs j INNER JOIN employees e
+ON j.JOB_ID = e.JOB_ID
+GROUP BY j.JOB_ID;
+
+-- 6) Disply job title,employee name and the difference between maximum salary for the job and salary of the employee.
+
+SELECT j.JOB_TITLE,CONCAT(e.FIRST_NAME,' ',LAST_NAME) AS EMPLOYEE_NAME,j.MAX_SALARY,e.SALARY,j.MAX_SALARY-e.SALARY AS 'DIFFERENCE BETWEEN MAX SALARY AND SALARY'
+FROM jobs j INNER JOIN employees e
+ON j.JOB_ID = e.JOB_ID;
+
+
+-- 7) Display last name,job title of employees who have commission percentage and belongs to department 30
+
+SELECT e.LAST_NAME,j.JOB_TITLE,e.COMMISSION_PCT,e.DEPARTMENT_ID 
+FROM employees e INNER JOIN jobs j
+ON j.JOB_ID = e.JOB_ID 
+WHERE e.COMMISSION_PCT !=0 AND e.DEPARTMENT_ID =30; -- EMPTY SET,** NO DEPATMENT PRESENT HAVING ID 30
+
+-- 8) Display details of jobs that were done by any employee who is currently drawing more than 15000 of salary
+
+SELECT j.* -- j.JOB_TITLE,e.FIRST_NAME,e.SALARY
+FROM employees e INNER JOIN jobs j
+ON e.JOB_ID = j.JOB_ID
+WHERE e.SALARY>15000;
+
+
+-- 9) Display department name,manager name and salary of the manager for all managers whose experience is more than 5 years
+
+SELECT d.DEPARTMENT_NAME,CONCAT(e.FIRST_NAME,' ',e.LAST_NAME) AS MANAGER_NAME,e.SALARY,YEAR(CURRENT_DATE)-YEAR(e.HIRE_DATE) AS EXPERIENCE
+FROM departments d INNER JOIN employees e
+ON d.MANAGER_ID = e.EMPLOYEE_ID
+WHERE YEAR(CURRENT_DATE)-YEAR(e.HIRE_DATE) > 5; -- WE CAN'T USE EXPERIENCE HERE INSTEAD OF THAT DIFFERENCE FORMULA
+
+
+-- 10) Display employee name if the employee joined before his manager
+
+SELECT CONCAT(e1.FIRST_NAME,' ',e1.LAST_NAME) AS EMPLOYEE_NAME, e1.HIRE_DATE AS EMP_JOIN_DATE,e2.EMPLOYEE_ID AS MANAGER_ID,e2.FIRST_NAME AS MANAGER_NAME,e2.HIRE_DATE AS MAN_JOIN_DATE
+FROM employees e1 INNER JOIN employees e2
+ON e1.MANAGER_ID = e2.EMPLOYEE_ID
+WHERE DATEDIFF(e1.HIRE_DATE,e2.HIRE_DATE)<0; -- EMPTY SET AS NO EMPLOYEE HAS JOINED BEFORE HIS MANAGER
+
+
+-- 11) Display employee name,job title for the jobs employee did in the past where the job was done less than six months
+
+SELECT CONCAT(e.FIRST_NAME,' ',e.LAST_NAME) AS EMPLOYEE_NAME, j.JOB_TITLE,DATEDIFF(END_DATE,START_DATE)
+FROM employees e INNER JOIN jobs j
+ON e.JOB_ID = j.JOB_ID
+INNER JOIN job_history jh
+ON e.EMPLOYEE_ID = jh.EMPLOYEE_ID
+WHERE DATEDIFF(END_DATE,START_DATE) < 180; -- EMPTY SET AS ALL HAVE DONE JOB MORE THAN 6 MONTHS
+
+-- 12) Display employee name and country in which he is working.
+
+SELECT CONCAT(e.FIRST_NAME,' ',e.LAST_NAME) AS EMPLOYEE_NAME,c.COUNTRY_NAME
+FROM employees e INNER JOIN departments d
+ON e.DEPARTMENT_ID = d.DEPARTMENT_ID
+INNER JOIN locations l
+ON d.LOCATION_ID = l.LOCATION_ID
+INNER JOIN countries c
+ON l.COUNTRY_ID = c.COUNTRY_ID;
+
+
+-- 13) Display department name,average salary and number of employees with commission within the department
+
+SELECT d.DEPARTMENT_NAME,AVG(e.SALARY),COUNT(e.EMPLOYEE_ID)
+FROM employees e INNER JOIN departments d
+ON e.DEPARTMENT_ID = d.DEPARTMENT_ID
+WHERE e.COMMISSION_PCT != 0
+GROUP BY d.DEPARTMENT_NAME ;
+
+
+-- 14) Display the month in which more than 5 employees joined in any department located in Sydney.
+
+SELECT MONTH(e.HIRE_DATE)
+FROM employees e INNER JOIN departments d
+ON e.DEPARTMENT_ID = d.DEPARTMENT_ID
+INNER JOIN locations l
+ON d.LOCATION_ID = l.LOCATION_ID
+WHERE l.CITY = 'Seattle' -- EMPTY SET AS NO DEPARTMENT IS LOCATED IN SYDNEY
+GROUP BY MONTH(e.HIRE_DATE) 
+HAVING COUNT(e.EMPLOYEE_ID) > 5;
+
+-- 15) Display details of departments in which the maximum salary is more than 10000 .
+
+SELECT DISTINCT d.*
+FROM departments d INNER JOIN employees e
+ON d.DEPARTMENT_ID = e.DEPARTMENT_ID
+INNER JOIN jobs j
+ON e.JOB_ID = j.JOB_ID
+WHERE j.MAX_SALARY>10000;
+
+
+-- 16)Display employee name,job title,start date and end date of past jobs of all employees with commission percentage null
+
+SELECT CONCAT(e.FIRST_NAME,' ',e.LAST_NAME) AS EMPLOYEE_NAME,j.JOB_TITLE,jh.START_DATE,jh.END_DATE,e.COMMISSION_PCT
+FROM employees e INNER JOIN jobs j
+ON e.JOB_ID = j.JOB_ID
+INNER JOIN job_history jh
+ON e.EMPLOYEE_ID = jh.EMPLOYEE_ID
+WHERE e.COMMISSION_PCT !=0;
+
+
+-- 
+USE spj;
+--
+
+
+--1) Display the Supplier name and the Quantity sold
+
+SELECT s.Sname,SUM(sp.QTY) AS QUANTITY_SOLD
+FROM S s INNER JOIN SP sp
+ON s.`S#` = sp.`S#`
+GROUP BY (s.Sname);
+
+-- 2) Display the Part name and Quantity sold
+
+SELECT p.Pname,SUM(sp.QTY)
+FROM P p INNER JOIN SP sp
+ON p.`P#` = sp.`P#`
+GROUP BY p.Pname;
+
+-- 3) Display the Project name and Quantity sold
+
+SELECT j.Jname,SUM(sp.QTY)
+FROM J j INNER JOIN SP sp
+ON j.`J#`=sp.`J#`
+GROUP BY j.`J#`
+ORDER BY j.`J#`;
+
+
+-- 4) Display the Supplier name,Part name,Project name and Quantity sold
+
+SELECT s.Sname,p.Pname,j.Jname,sp.QTY
+FROM SP sp INNER JOIN S s
+ON s.`S#`= sp.`S#`
+INNER JOIN P p
+ON p.`P#`= sp.`P#`
+INNER JOIN J j
+ON j.`J#`= sp.`j#`
+ORDER BY s.`S#`;
+
+
+-- #5) Display the Supplier name,Supplying Parts to a Project in the same City
+
+SELECT distinct s.Sname,p.Pname,j.Jname,s.City,sp.QTY
+FROM SP sp INNER JOIN S s
+ON s.`S#` = sp.`S#`
+INNER JOIN P p
+ON p.`P#` = sp.`P#`
+INNER JOIN J j
+ON j.`J#` = sp.`J#`
+WHERE s.City = p.City AND s.City = j.City;
+

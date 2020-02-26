@@ -177,12 +177,126 @@ WHERE l.CITY='Seattle'
 GROUP BY MONTH(e.HIRE_DATE)
 HAVING COUNT(EMPLOYEE_ID)>5;
 
+************
+
++----+--------+--------+--------+
+| S# | Sname  | Status | City   |
++----+--------+--------+--------+
+| S1 | Smith  |     20 | London |
+| S2 | Jones  |     10 | Paris  |
+| S4 | Clark  |     20 | London |
+| S5 | Adams  |     30 | Athens |
+| S6 | prasad |     50 | nagpur |
++----+--------+--------+--------+
+
+11 . Display all the Suppliers with the same Status as the
+supplier , ‘ CLARK ’.
+
+SELECT s1.Sname,s1.Status
+FROM S s1 INNER JOIN S s2
+ON s1.Sname = (SELECT Status FROM S WHERE Sname='Clark');
+
+#Day7
+
+CREATE TABLE empcpy 
+AS (SELECT * FROM emp);  -- () ARE OPTIONAL
+
+empcpy;
++-------+---------+--------+
+| empno | ename   | deptno |
++-------+---------+--------+
+|     1 | Rahul   |     10 |
+|     2 | Amit    |     10 |
+|     3 | Sandeep |     20 |
+|     4 | Nilesh  |     50 |
+|     5 | Nitin   |     50 |
+|     1 | Shivam  |     20 |
++-------+---------+--------+
+
+CREATE VIEW view1
+AS SELECT * FROM empcpy;
+
+INSERT INTO view1
+VALUES(1,'Shivam',20);
+
+view1;
++-------+---------+--------+
+| empno | ename   | deptno |
++-------+---------+--------+
+|     1 | Rahul   |     10 |
+|     2 | Amit    |     10 |
+|     3 | Sandeep |     20 |
+|     4 | Nilesh  |     50 |
+|     5 | Nitin   |     50 |
+|     1 | Shivam  |     20 |
++-------+---------+--------+
+6 rows in set (0.00 sec)
 
 
+SHOW FULL TABLES;
 
 
+CREATE VIEW view2
+AS SELECT empno,ename,sal,deptno FROM EMP;
 
+view2;
++-------+--------+---------+--------+
+| empno | ename  | sal     | deptno |
++-------+--------+---------+--------+
+|  7369 | SMITH  |  800.00 |     20 |
+|  7499 | ALLEN  | 1600.00 |     30 |
+|  7521 | WARD   | 1250.00 |     30 |
+|  7566 | JONES  | 2975.00 |     20 |
+|  7654 | MARTIN | 1250.00 |     30 |
+|  7698 | BLAKE  | 2850.00 |     30 |
+|  7782 | CLARK  | 2450.00 |     10 |
+|  7788 | SCOTT  | 3000.00 |     20 |
+|  7839 | KING   | 5000.00 |     10 |
+|  7844 | TURNER | 1500.00 |     30 |
+|  7876 | ADAMS  | 1100.00 |     20 |
+|  7900 | JAMES  |  950.00 |     30 |
+|  7902 | FORD   | 3000.00 |     20 |
+|  7934 | MILLER | 1300.00 |     10 |
++-------+--------+---------+--------+
+	
+INSERT INTO view2
+VALUES(7935,'SHIVAM',1500,30);
 
+SELECT * FROM view2;
+SELECT * FROM EMP;
+
+CREATE VIEW Compounded_View
+AS (SELECT empno,ename,deptno,sal,sal*12 AS ANNUAL_SALARY FROM EMP); 
+
+INSERT INTO Compounded_View
+VALUES(7936,'AMIT',6000,10);
+
+CREATE VIEW Where_View
+AS 
+(SELECT empno,ename,deptno,sal FROM EMP 
+WHERE sal > 2000);
+
+SELECT * FROM Where_View;
+
+INSERT INTO Where_View
+VALUES(7937,'SANDEEP',1200,10);
+
+INSERT INTO Where_View
+VALUES(7938,'KETAN',2200,10);
+
+SELECT * FROM Where_View;
+
+DELETE FROM EMP 
+WHERE empno=7935;
+
+CREATE TABLE EMP_CPY
+AS SELECT * FROM EMP;
+
+CREATE VIEW Groupby_view
+AS 
+(SELECT SUM(price),subject 
+FROM BOOKS
+GROUP BY subject);
 
 
 

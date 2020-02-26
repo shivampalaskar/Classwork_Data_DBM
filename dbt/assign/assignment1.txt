@@ -1,0 +1,7 @@
+1. Create 'dac' user with password 'dac'.
+2. Create 'spj' database & grant all permissions to 'dac' user.
+3. Create tables mentioned in file spj_table_for_SQL_Excercise.txt (by 'dac' login).
+4. Create 'classwork' database & grant all permissions to 'dac' user. Import classwork-db.sql.
+5. Create 'hr' database & grant all permissions to 'dac' user. Import hr-db.sql.
+6. Create 'sales' database & grant all permissions to 'dac' user. Import sales-db.sql.
+7. Create 'northwind' database & grant all permissions to 'dac' user. Import northwind-db.sql.

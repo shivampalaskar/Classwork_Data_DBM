@@ -186,3 +186,4 @@ INNER JOIN J j
 ON j.`J#` = sp.`J#`
 WHERE s.City = p.City AND s.City = j.City;
 
+

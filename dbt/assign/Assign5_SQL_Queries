@@ -119,26 +119,19 @@ SELECT JOB_ID
 FROM job_history
 WHERE END_DATE-START_DATE >100
 GROUP BY JOB_ID
-HAVING COUNT(EMPLOYEE_ID)>3;
+HAVING COUNT(EMPLOYEE_ID)>1;
 
 17)
 SELECT DEPARTMENT_ID,YEAR(HIRE_DATE) AS YEAR,COUNT(EMPLOYEE_ID)
 FROM employees
 GROUP BY DEPARTMENT_ID,YEAR;
 
-18)
-SELECT DEPARTMENT_ID,COUNT(EMPLOYEE_ID) 
-FROM employees
-GROUP BY DEPARTMENT_ID;
+18)Display departments where any manager is managing more than 5 employees.
 
-SELECT MANAGER_ID,COUNT(EMPLOYEE_ID) 
+SELECT MANAGER_ID,COUNT(EMPLOYEE_ID),DEPARTMENT_ID
 FROM employees
-GROUP BY MANAGER_ID;
-
-SELECT DEPARTMENT_ID,MANAGER_ID,COUNT(EMPLOYEE_ID) 'No. Employee Managed'
-FROM employees
-GROUP BY DEPARTMENT_ID,MANAGER_ID
-HAVING COUNT(EMPLOYEE_ID)>5;
+GROUP BY MANAGER_ID,DEPARTMENT_ID
+HAVING COUNT(MANAGER_ID)>=5;
 
 19)
 SELECT FIRST_NAME,ADDDATE(HIRE_DATE,INTERVAL 30 DAY) AS 'FIRST SALARY DATE'
@@ -178,6 +171,56 @@ SELECT DEPARTMENT_ID,MAX(SALARY)
 FROM employees
 GROUP BY DEPARTMENT_ID
 HAVING MAX(SALARY)>10000;
+
+27) Display details of departments managed by ‘Smith’ -- USE Jennifer
+
+SELECT d.* 
+FROM employees e INNER JOIN departments d
+ON e.DEPARTMENT_ID = d.DEPARTMENT_ID
+WHERE e.FIRST_NAME = 'Jennifer'; 
+
++---------------+-----------------+------------+-------------+
+| DEPARTMENT_ID | DEPARTMENT_NAME | MANAGER_ID | LOCATION_ID |
++---------------+-----------------+------------+-------------+
+|            50 | Shipping        |        121 |        1500 |
+|            10 | Administration  |        200 |        1700 |
++---------------+-----------------+------------+-------------+
+
+28) Display jobs into which employees joined in the current year
+
+SELECT DISTINCT j.JOB_TITLE,YEAR(HIRE_DATE)
+FROM employees e INNER JOIN jobs j
+ON e.JOB_ID = j.JOB_ID
+WHERE YEAR(e.HIRE_DATE) = YEAR(CURRENT_DATE);  -- EMPTY SET
+
+29) Display employees who did not do any job in the past.
+
+SELECT e.FIRST_NAME AS EMPLOYEE_NAME
+FROM employees e INNER JOIN job_history jh
+ON e.EMPLOYEE_ID = jh.EMPLOYEE_ID;
+
+30) Display job title and average salary for employees who did a job in the past.
+
+SELECT j.JOB_TITLE,MAX_SALARY,MIN_SALARY,(MAX_SALARY+MIN_SALARY)/2 AS AVERAGE_SALARY
+FROM job_history jh INNER JOIN jobs j
+ON jh.JOB_ID = j.JOB_ID;
+
+31) Display details of manager who manages more than 5 employees.
+
+SELECT MANAGER_ID,COUNT(EMPLOYEE_ID),DEPARTMENT_ID
+FROM employees
+GROUP BY MANAGER_ID,DEPARTMENT_ID
+HAVING COUNT(MANAGER_ID)>=5;
+
+
+
+
+
+*****
+SELECT MANAGER_ID,COUNT(EMPLOYEE_ID),DEPARTMENT_ID
+FROM employees
+GROUP BY MANAGER_ID,DEPARTMENT_ID
+HAVING COUNT(MANAGER_ID)>=5;
 
 
 -- USE spj Database

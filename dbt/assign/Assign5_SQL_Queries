@@ -166,11 +166,13 @@ SELECT COUNT(EMPLOYEE_ID)
 FROM employees
 WHERE DAY(HIRE_DATE)>15;
 
-26)
-SELECT DEPARTMENT_ID,MAX(SALARY)
-FROM employees
-GROUP BY DEPARTMENT_ID
-HAVING MAX(SALARY)>10000;
+26) Display details of departments in which the maximum salary is more than 10000.
+
+SELECT e.DEPARTMENT_ID,d.DEPARTMENT_NAME,d.MANAGER_ID,d.LOCATION_ID,e.SALARY AS 'MAX SALARY',e.EMPLOYEE_ID
+FROM employees e INNER JOIN departments d
+ON e.DEPARTMENT_ID = d.DEPARTMENT_ID
+GROUP BY e.DEPARTMENT_ID
+HAVING MAX(e.SALARY)>10000;
 
 27) Display details of departments managed by ‘Smith’ -- USE Jennifer
 
@@ -207,44 +209,162 @@ ON jh.JOB_ID = j.JOB_ID;
 
 31) Display details of manager who manages more than 5 employees.
 
-SELECT MANAGER_ID,COUNT(EMPLOYEE_ID),DEPARTMENT_ID
+SELECT DISTINCT MANAGER_ID,COUNT(EMPLOYEE_ID),DEPARTMENT_ID
 FROM employees
 GROUP BY MANAGER_ID,DEPARTMENT_ID
 HAVING COUNT(MANAGER_ID)>=5;
 
+32) Display the departments into which no employee joined in last two years
+	?
+
+33) Display the details of departments in which the max salary is greater than 10000 for employees who did a job in the past.
+
+SELECT e.DEPARTMENT_ID,d.DEPARTMENT_NAME,d.MANAGER_ID,d.LOCATION_ID,e.SALARY AS 'MAX SALARY',e.EMPLOYEE_ID
+FROM employees e INNER JOIN departments d
+ON e.DEPARTMENT_ID = d.DEPARTMENT_ID
+INNER JOIN job_history jh
+ON e.EMPLOYEE_ID = jh.EMPLOYEE_ID
+GROUP BY e.DEPARTMENT_ID
+HAVING MAX(e.SALARY)>10000; 
+
+--34) Display details of current job for employees who worked as IT Programmers in the past. 
+
+SELECT jh.EMPLOYEE_ID,e.FIRST_NAME,jh.JOB_ID AS 'PAST JOB ID',j.JOB_TITLE AS 'PAST JOB TITLE',e.JOB_ID AS 'CURRENT JOB ID',j1.JOB_TITLE AS 'CURRENT JOB TITLE' 
+FROM job_history jh INNER JOIN employees e
+ON jh.EMPLOYEE_ID = e.EMPLOYEE_ID 
+INNER JOIN jobs j
+ON jh.JOB_ID = j.JOB_ID
+INNER JOIN jobs j1
+ON e.JOB_ID = j1.JOB_ID
+WHERE jh.JOB_ID = 'IT_PROG';
 
 
+--35) Display third highest salary of all employees
+
+SELECT * FROM employees
+WHERE SALARY = (SELECT DISTINCT SALARY FROM EMPLOYEES ORDER BY SALARY DESC LIMIT 2,1);
 
 
-*****
-SELECT MANAGER_ID,COUNT(EMPLOYEE_ID),DEPARTMENT_ID
-FROM employees
-GROUP BY MANAGER_ID,DEPARTMENT_ID
-HAVING COUNT(MANAGER_ID)>=5;
+--36) Display details of the employees where commission percentage is null and salary in the range 5000 to 10000 and department is 30.
 
+SELECT * FROM employees
+WHERE COMMISSION_PCT = 0 AND SALARY BETWEEN 5000 AND 10000 AND DEPARTMENT_ID = 30; -- EMPTY SET
 
--- USE spj Database
-
-1)
 USE spj;
 
+--1) Display all the Part names starting with the letter ‘S’.
+
 SELECT Pname FROM P 
-WHERE pname LIKE 'S%';
+WHERE Pname LIKE 'S%';
 
-2)
-SELECT Sname,city FROM S
-WHERE LEFT(city,1)='L';
 
-3)
-SELECT Jname FROM J
-WHERE SUBSTRING(Jname,3,1)='n';
+--2) Display all the Suppliers, belonging to cities starting with the letter ‘L’.
 
-4)
-SELECT Sname FROM S
-WHERE ASCII(LEFT(Sname,1))=ASCII(UPPER(LEFT(Sname,1))); 
+SELECT * FROM S
+WHERE City LIKE 'L%';
 
-5)
+
+--3) Display all the Projects, with the third letter in JNAME as ‘n’.
+
+SELECT * FROM J 
+WHERE Jname LIKE '__n%';
+
+
+--4) Display all the Supplier names with the initial letter capital.
+
+SELECT CONCAT(UPPER(LEFT(Sname,1)),SUBSTRING(Sname,2,LENGTH(Sname))) AS 'SUPPLIER NAME' FROM S;
+
+
+--5) Display all the Supplier names in upper case.
+
 SELECT UPPER(Sname) FROM S;
+
+--6) Display all the Supplier names in lower case.
+
+SELECT LOWER(Sname) FROM S;
+
+--7) Display all the Supplier names padded to 25 characters, with spaces on the left.
+
+SELECT LPAD(Sname,25," ") FROM S;
+
+--8) Display all the Supplier names (with ‘la’ replaced by ‘ro’). HINT: REPLACE.
+
+SELECT REPLACE(Sname,'la','ro') FROM S;
+
+
+--9) Implement the above command such that ‘l’ is replaced with ‘r’ and ‘a’ is replaced with ‘o’.
+
+SELECT REPLACE(REPLACE(Sname,'l','r'),'a','o') FROM S;
+
+
+--10) Display the Supplier names and the lengths of the names
+
+SELECT Sname,LENGTH(Sname) FROM S;
+
+--11) Use the soundex function to search for a supplier by the name of ‘BLOKE’.
+
+--12) Display the Supplier name and the status (as Ten, Twenty, Thirty, etc.).
+
+--13) Display the current day (e.g. Thursday).
+SELECT DAYNAME(CURRENT_DATE);
+
+
+--14) Display the minimum Status in the Supplier table.
+
+SELECT * FROM S
+WHERE Status <= ANY(SELECT MIN(Status) FROM S); 
+
+--15) Display the maximum Weight in the Parts table.
+
+SELECT MIN(WEIGHT) FROM P;
+
+
+--16) Display the average Weight of the Parts.
+
+SELECT AVG(WEIGHT) FROM P;
+
+--17) Display the total Quantity sold for part ‘P1’.
+
+SELECT SUM(QTY) FROM sp
+WHERE `P#`='P1';
+
+
+--18) Display the total Quantity sold for each part.
+
+SELECT `P#`,QTY FROM sp
+GROUP BY `P#`;
+
+
+--19) Display the average Quantity sold for each part.
+
+SELECT `P#`, AVG(QTY) FROM sp
+GROUP BY `P#`;
+
+--20) Display the maximum Quantity sold for each part, provided the maximum Quantity is greater than 800.
+
+SELECT `P#`,MAX(QTY) FROM sp
+GROUP BY `P#`
+HAVING MAX(QTY)>=800;
+
+--21) Display the Status and the count of Suppliers with that Status.
+
+SELECT Status,COUNT(Sname) FROM S
+GROUP BY Status;
+
+--22) Display the count of Projects going on in different cities.
+
+SELECT City,COUNT(Jname) FROM J
+GROUP BY City;
+
+--23) What is the difference between COUNT(Status) and
+COUNT(*) ?
+    NO DIFFERENCE 
+
+--24) Display the Status and the Count of Suppliers with that Status in the following formatas shown below:-
+Status Count
+Ten 1
+Twenty 2
+Thirty 3
 
 
 

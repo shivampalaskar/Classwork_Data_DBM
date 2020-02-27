@@ -1,0 +1,7 @@
+DELIMITER $$
+DROP PROCEDURE IF EXISTS sp_delete_emp;
+CREATE PROCEDURE sp_delete_emp( )
+BEGIN
+    DELETE FROM emp WHERE empno=7935;
+END $$
+DELIMITER ;

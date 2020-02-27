@@ -186,4 +186,85 @@ INNER JOIN J j
 ON j.`J#` = sp.`J#`
 WHERE s.City = p.City AND s.City = j.City;
 
+--6) Display the Part name that is Red is color and the Quantity sold
+
+SELECT P.Pname,SUM(sp.QTY),p.Color
+FROM P p INNER JOIN SP sp
+ON p.`P#` = sp.`P#`
+GROUP BY p.Pname
+HAVING p.Color='Red';
+
+--7) Display all the Quantity sold by Suppliers with the Status 20.
+
+SELECT s.Sname,sp.QTY,s.Status
+FROM S s INNER JOIN SP sp
+ON s.`S#`=sp.`S#`
+GROUP BY s.Sname
+HAVING s.Status = 20;
+
+--8) Display all the Parts and Quantity with a Weight 14
+
+SELECT p.Pname,sp.QTY,p.Weight
+FROM P p INNER JOIN SP sp
+GROUP BY Pname
+HAVING Weight=14; -- EMPTY SET WEIGHT 14 IS NOT PRESENT
+
+--9) Display all the Project names and City which has bought more than 500 Parts
+
+SELECT j.Jname,j.City,sp.QTY
+FROM J j INNER JOIN SP sp
+USING (`J#`)
+GROUP BY Jname
+HAVING sp.QTY>500;
+
+--10) Display all the Part names and Quantity sold that have a Weight less than 15 .
+
+SELECT p.Pname,sp.QTY,p.Weight
+FROM P p INNER JOIN SP sp
+ON p.`P#`=sp.`P#`
+GROUP BY Pname
+HAVING p.Weight<15;
+
+
+--11) Display all the Suppliers with the same Status as the supplier CLARK
+
+SELECT Sname,Status 
+FROM S
+WHERE Status = (SELECT Status FROM S WHERE Sname = 'Clark');
+
+--12) Display all the Employees in the same department as the employee MILLER
+    ?
+    
+--13) Display all the Parts which have more Weight than all the Red parts .
+
+SELECT Pname,Weight,Color
+FROM P 
+WHERE Weight > ALL(SELECT Weight FROM P WHERE Color = 'Red'); -- EMPTY SET AS NO PART HAS MORE WEIGHT THAN 19
+
+--14) Display all the Projects going on in the same city as the project TAPE
+
+SELECT Jname,City 
+FROM J 
+WHERE City = (SELECT City FROM J WHERE Jname = 'Tape');
+
+
+--15) Display all the Parts with Weight less than all the Green parts. 
+
+SELECT Pname,Weight
+FROM P
+WHERE Weight < ALL(SELECT Weight FROM P WHERE Color = 'Green');
+
+--16) Display the name of the Supplier who has sold the maximum Quantity in one sale
+
+-- *IN ONE SALE*
+
+SELECT s.Sname,MAX(sp.QTY)
+FROM S s INNER JOIN SP sp
+ON s.`S#`=sp.`S#`;
+
+--17) Display the name of the Employee with the minimum Salary.
+    ?
+    
+
+
 

@@ -1,0 +1,85 @@
+
+--3) Create a view that shows the average and total orders for each salesperson after his or her name. Assume all names are unique.
+
+CREATE VIEW view_sales AS 
+SELECT s.sname,AVG(o.amt),count(o.onum) 
+FROM salespeople s INNER JOIN orders o 
+ON s.snum = o.snum
+GROUP BY s.sname;
+SELECT * FROM view_sales;
+
+
+--4) Create a view that shows each salesperson with multiple customers.
+
+SELECT s.sname,c.cname
+FROM salespeople s INNER JOIN customers c
+ON s.snum = c.snum
+ORDER BY s.sname;
+
+
+--5. Create a view of the Salespeople table called Commissions.This view will include only the snum and comm fields. Through this view, someone could enter or change commissions, but only to values between .10 and .20.
+
+CREATE VIEW commission AS 
+SELECT snum,comm
+FROM salespeople WHERE comm BETWEEN 0.10 AND 0.20 WITH CHECK OPTION ;
+
+--6. Grant sunbeam user the right to insert or update the Customers table while keeping her possible rating values in the range of 100 to 500.
+
+--7. Allow sunbeam user to query the Customers table, but restrict his access to those customers whose rating is the lowest.
+
+USE classwork;
+
+--1) Write a SQL statement to rename the table EMP to EMPLOYEE.
+
+ALTER TABLE emp
+RENAME TO employee;
+
+
+--2) Write a SQL statement to add a column region to the table DEPT.
+
+ALTER TABLE dept
+ADD COLUMN region VARCHAR(50);
+
+--3) Write a SQL statement to add a dummy_ID as the first column of the table DUMMY.
+
+ALTER TABLE dummy
+ADD COLUMN dummy_Id INT FIRST;
+
+
+--4) Write a SQL statement to add a column position after grade to the table SALGRADE.
+
+ALTER TABLE salgrade
+ADD COLUMN position INT AFTER grade;
+
+
+--5) Write a SQL statement change the data type of the column sal to float in the table EMP.
+
+ALTER TABLE emp
+MODIFY COLUMN sal FLOAT;
+
+--6) Write a SQL statement to drop the column region from the table DEPT.
+
+ALTER TABLE dept
+DROP COLUMN region;
+
+--7) Write a SQL statement to change the name of the column job to job_designation from EMP table , keeping the data type and size same.
+
+USE sales;
+
+
+--8) Write a SQL statement to add a primary key for the columns SNUM in the SALESPEOPLE table.
+
+ALTER TABLE salespeople
+ADD CONSTRAINT pk_snum PRIMARY KEY (snum);
+
+
+--9) Write a SQL statement to add a primary key for the columns CNUM in the CUSTOMERS table. 
+
+ALTER TABLE customers
+ADD CONSTRAINT pk_cnum PRIMARY KEY (cnum);
+
+
+--10) Write a SQL statement to add a foreign key on SNUM column of CUSTOMERS table referencing to the primary key SNUM of SALESPEOPLE table.
+
+ALTER TABLE customers 
+ADD CONSTRAINT fk_snum_cust_sale FOREIGN KEY (snum) REFERENCES salespeople(snum);

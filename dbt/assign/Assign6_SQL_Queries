@@ -310,5 +310,20 @@ ON c.cnum = o.cnum
 HAVING c.rating >100;
 
 
+--5) Write a query that produces all pairs of salespeople who are .living in the same city Exclude combinations of salespeople with themselves as well as duplicate rows with the order reversed
+
+SELECT s1.sname,s1.city,s2.sname,s2.city 
+FROM salespeople s1 INNER JOIN 
+salespeople s2 ON s1.city = s2.city 
+WHERE s1.sname > s2.sname;
+
+
+--6) Write a query that produces the names and cities of all customers with the same rating as Hoffman .
+
+SELECT cname,city,rating
+FROM customers
+WHERE rating = (SELECT rating FROM customers WHERE cname='Hoffman');
+
+
 
 

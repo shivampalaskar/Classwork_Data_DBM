@@ -1,0 +1,39 @@
+USE classwork;
+
+--1) update job as Software Devloper whose name is SMITH
+
+UPDATE emp
+SET job = 'Software Developer' 
+WHERE ename='SMITH'; 
+
+
+--2) update sal and comm whose empno is 7788.
+
+UPDATE emp
+SET sal = 5555,comm = 333
+WHERE empno = 7788;
+
+--3) update anaul salary of all employee
+    ?
+
+--4) update comm to 100 whose commis null.
+
+UPDATE emp
+SET comm = 100
+WHERE comm IS NULL;
+
+--5) delete department whose deptno is 40.
+
+DELETE FROM dept 
+WHERE deptno =40;
+
+
+--6) delete all employees who is hired on '1982-01-23'
+
+DELETE FROM emp
+WHERE hire = '1982-01-23';
+
+--7) delete all employees whose deptno is 10.
+
+DELETE FROM emp
+WHERE deptno = 10;

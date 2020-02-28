@@ -264,7 +264,51 @@ ON s.`S#`=sp.`S#`;
 
 --17) Display the name of the Employee with the minimum Salary.
     ?
+
+--18) Display the name of the Supplier who has sold the maximum overall Quantity (sum of Sales)
+
+SELECT Sname,SUM(QTY)
+FROM S s INNER JOIN SP sp 
+ON s.`S#`=sp.`S#`
+GROUP BY Sname
+ORDER BY SUM(QTY) DESC
+LIMIT 1,1;
     
+
+USE sales;
+
+--1) Write a query that lists each order number followed by the name of the customer who made the order
+
+SELECT o.onum,c.cname
+FROM orders o INNER JOIN customers c
+ON o.cnum = c.cnum;
+
+
+--2) Write a query that gives the names of both the salesperson and the customer for each order along with the order number
+
+SELECT s.sname AS 'SALESPERSON',c.cname 'CUSTOMER',o.onum AS 'ORDER NUMBER'
+FROM customers c INNER JOIN orders o
+ON c.cnum = o.cnum
+INNER JOIN salespeople s 
+ON s.snum = o.snum;
+
+--3) Write a query that produces all customers serviced by salespeople with a commission above 12%.Output the customers name,the salespersons name, and the salespersons rate of commission
+
+SELECT c.cname,s.sname,s.comm
+FROM customers c INNER JOIN salespeople s
+ON c.snum = s.snum
+HAVING s.comm > 0.12;
+
+
+--4) Write a query that calculates the amount of the salespersons commission on each order by a customer with a rating above 100 .
+
+SELECT o.onum,o.amt,o.amt*s.comm AS 'Salesperson commision',c.rating
+FROM orders o INNER JOIN salespeople s
+ON o.snum = s.snum
+INNER JOIN customers c
+ON c.cnum = o.cnum
+HAVING c.rating >100;
+
 
 
 

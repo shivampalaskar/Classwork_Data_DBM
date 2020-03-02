@@ -1,0 +1,166 @@
+CREATE TABLE Tb_dept
+(Dept_id INT,
+Dept VARCHAR(20),
+CONSTRAINT pk_TBDEPT_Deptid PRIMARY KEY (Dept_id));
+
+INSERT INTO Tb_dept
+VALUES
+(1,'Electronics'),
+(2,'Civil'),
+(3,'Chemical');
+
+CREATE TABLE Tb_emp
+(Emp_id INT,
+Name VARCHAR(20),
+City VARCHAR(20),
+Join_date DATE,
+Salary INT,
+Dept_id INT,
+CONSTRAINT pk_TBEMP_empid PRIMARY KEY (Emp_id),
+CONSTRAINT fk_TBEMP_TBDEPT_deptid FOREIGN KEY (Dept_id) REFERENCES Tb_dept(Dept_id)
+);
+
+INSERT INTO Tb_emp
+VALUES
+(1,'Abhishek','Mumbai','2013-12-23',12000,1),
+(2,'Depak','Pune','2011-01-01',15000,2),
+(3,'Ravi','Surat','2011-03-01',7000,1),
+(4,'Radha','Delhi','2012-08-02',19000,1),
+(5,'Suman','Goa','2010-06-01',14000,3),
+(6,'Adhik','Satara','2014-12-01',10000,2);
+
+
+1)
+SELECT count(name) FROM Tb_emp;
+
+2) 
+
+SELECT * FROM Tb_emp
+WHERE Salary = (SELECT DISTINCT Salary FROM Tb_emp 
+ORDER BY Salary DESC 
+LIMIT 2,1);
+
+3)
+
+ALTER TABLE Tb_emp
+ADD COLUMN state VARCHAR(20);
+
+4)
+SELECT Name,POSITION('dh' IN Name) AS 'dh POSTION IN NAME' FROM Tb_emp;
+
+5)
+
+SELECT Name,SUBSTRING(Name,LENGTH(Name)-2,LENGTH(Name)) 
+FROM Tb_emp;
+
+6)
+
+SELECT * FROM Tb_emp
+WHERE Dept_id = 2 OR Dept_id = 3;
+
+7)
+
+SELECT e.Name,e.Join_date,d.Dept
+FROM Tb_emp e INNER JOIN Tb_dept d
+ON e.Dept_id = d.Dept_id;
+
+8)
+
+SELECT d.Dept_id,d.Dept,COUNT(e.Emp_id) AS 'NO. OF EMPLOYEES'
+FROM Tb_emp e INNER JOIN Tb_dept d
+ON e.Dept_id = d.Dept_id
+GROUP BY d.Dept_id;
+
+9)
+
+SELECT DATE_FORMAT(Join_Date, '%D of %M') 
+FROM Tb_emp;
+
+10)
+
+UPDATE Tb_emp
+SET state = 'Maharashtra';
+
+PL/SQL:
+
+SELECT 15 % 10 FROM DUAL;	
+
+DELIMITER $$
+CREATE FUNCTION find_amstrong (num INT) VARCHAR(50) DETERMINISTIC
+BEGIN
+	DECLARE tempNum INT;	
+	DECLARE Sum INT DEFAULT 0;
+	DECLARE oriNum INT;
+	tempNum = (num % 10);
+	
+	lebel :LOOP
+	tempNum = (num % 10);
+	sum = sum + tempNum
+
+
+
+MongoDB
+
+1) 
+use Exam;
+
+db.createCollection(Tb_Emps);
+
+db.Tb_emps.insertMany([
+		   {Emp_id : 1,Name : "Abhishek",City : "Mumbai",Join_date : "2013-12-23",Salary : 12000,Dept_id : 1}
+		   {Emp_id : 2,Name : "Dipak",City : "Pune",Join_date : "2011-01-01",Salary : 15000,Dept_id : 2}
+		   {Emp_id : 3,Name : "Ravi",City : "Surat",Join_date : "2011-03-01",Salary : 7000,Dept_id : 1},
+		   {Emp_id : 4,Name : "Radha",City : "Delhi",Join_date : "2012-08-02",Salary : 19000,Dept_id : 1},
+	   	   {Emp_id : 5,Name : "Suman",City : "Goa",Join_date : "2010-06-01",Salary : 14000,Dept_id : 3},
+		   {Emp_id : 6,Name : "Adhik",City : "Satara",Join_date : "2014-12-01",Salary : 10000,Dept_id : 2}]);
+
+
+db.Tb_emps.updateOne({Join_date:"2012-08-02"},{City : "Pune"} );
+
+db.Tb_emps.remove({City:"Pune"});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

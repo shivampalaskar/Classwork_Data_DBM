@@ -1,30 +1,27 @@
-
 DELIMITER //
-
+DROP FUNCTION IF EXISTS sf_arm;
 CREATE FUNCTION sf_arm ( number INT)
-RETURNS INT DETERMINISTIC
+RETURNS VARCHAR(50) DETERMINISTIC
 
 BEGIN
-DECLARE num INT DEFAULT 0;
+DECLARE num INT DEFAULT number;
 DECLARE sum INT DEFAULT 0;
 DECLARE remainder INT DEFAULT 0;
+DECLARE result VARCHAR(50) DEFAULT  CONCAT(num,' ','IS NOT ARMSTRONG NUMBER');
 
-SET num = number;
-WHILE number!= 0 DO 
+WHILE number > 0 DO
    SET remainder = number mod 10;
-
    SET sum = sum + remainder * remainder * remainder;
-      SET number = number /10;
+   SET number = number DIV 10;
 END WHILE;
-IF sum= number THEN
-  SET number =sum;
+
+IF sum = num THEN
+SET result = CONCAT(num,' ','IS ARMSTRONG NUMBER');
 END IF;
-INSERT INTO result VALUES(sum);
 
-RETURN sum;
-
+RETURN result;
 END //
 
 DELIMITER ;
 
-CALL sf_arm(153);
+SELECT sf_arm(153) FROM DUAL;

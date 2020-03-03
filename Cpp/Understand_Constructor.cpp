@@ -28,7 +28,7 @@ private :
 	int num2;
 public :
 	Test();
-	Test(int,int);
+	Test(int,int);  // This is nothing but Constructor Overloading
 	void display();
 };
 

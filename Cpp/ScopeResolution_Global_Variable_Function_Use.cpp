@@ -20,6 +20,6 @@ int main() {
 	cout<<"Locally defined Variable : "<<var<<endl;
 
 	globalFunction(); // Right
-	::globalFunction(); // Right
+	::globalFunction(); // Right -- USE when defined in another cpp file
 	return 0;
 }

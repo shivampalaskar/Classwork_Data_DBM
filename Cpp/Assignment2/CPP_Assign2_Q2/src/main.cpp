@@ -1,43 +1,105 @@
 //============================================================================
 // Name        : CPP_Assignment.cpp
-// Author      :
+// Author      : SHIVAM PALASKAR
 // Version     :
-// Copyright   : Your copyright notice
-// Description : CPP_Assign1_Q5
+// Copyright   : OPEN SOURCE
+// Description : CPP_Assign2_Q2
 //============================================================================
 
-
-/*
-Write a menu driven program for class Student. In Main Create Array of Objects and
-provide facility for Accept, Print, Search and Sort.
-For student accept name, gender, rollnumber and marks of three subjects from user
-and print name, rollnumber, gender and percentage.
-Provide global function e.g. “SortRecord ()” for sorting array. When we search 	a particular student in an array and if it is founds show all record of that 	student otherwise show some error message.
-*/
-
 #include <iostream>
-#include"Student.h"
-#include<stdlib.h>
+#include "Student.h"
+#include "Menu.h"
+#include <stdlib.h>
+#include <iomanip>
+#include <algorithm>
 
-#define SIZE 2
-
+int SIZE,flag=0;
 using namespace std;
-int cmpfunc(const void * book1, const void * book2) {
-	int l = *((BOOK *)book1)->name;
-	int r = *((BOOK *)book2)->name;
-	return (l - r);
+
+void acceptRecords(Student stud[]) {
+	flag = 1;
+	for (int i = 0; i < SIZE; i++)
+		stud[i].acceptStudentDetails();
 }
-void sortRecord(Student st[]) {
-	//qsort(st, 2, sizeof(st),comfunc);
-	qsort(st,2, sizeof(st),cmpfunc);
+
+void displayRecords(Student stud[]) {
+	for (int i = 0; i < SIZE; i++)
+		stud[i].printStudentDetails();
+}
+int getRollNumber(){
+	int roll_no;
+	cout<<"Enter Roll Number : ";
+	cin>>roll_no;
+	return roll_no;
+}
+
+void searchStudent(Student stud[]){
+	int roll_no = getRollNumber();
+	int student_index = -1;
+	for(int i=0;i<SIZE;i++){
+		if(roll_no==stud[i].getRollNo()){
+			student_index = i;
+			break;
+		}
+	}
+	if(student_index==-1)
+		cout<<"Not Found"<<endl;
+	else
+		stud[student_index].printStudentDetails();
+}
+
+int getSize(){
+	int size;
+	cout<<"Enter Number of Students : ";
+	cin>>size;
+	return size;
+}
+int cmpfun(void *ptr1,void *ptr2){
+
+	return 1;
+}
+
+bool comp(Student &lhs,Student &rhs) { // Reference OR without Reference can be used
+	return lhs.getRollNo() < rhs.getRollNo();
+}
+void sortRecords(Student stud[]){
+	sort(stud, stud+SIZE, comp); // sort(start,start+number of element,compare function)
+	cout<<"Sort Done !"<<endl;
 }
 
 int main() {
-	Student st[SIZE];
-	for(int i=0;i<SIZE;i++)
-		st[i].acceptStudentDetails();
-	for(int i=0;i<2;i++)
-		st[i].printStudentDetails();
-	sortRecord(st);
+	SIZE = getSize();
+	Student stud[SIZE];
+	int choice;
+	while((choice = menuList())!=0){
+		switch(choice){
+		case 1:
+			if (flag==0)
+				acceptRecords(stud);
+			else
+				cout << "Records Full !" << endl;
+			break;
+		case 2:
+			if(flag==1)
+				displayRecords(stud);
+			else
+				cout<<"Empty Records !"<<endl;
+			break;
+		case 3:
+			if(flag==1)
+				searchStudent(stud);
+			else
+				cout << "Empty Records !" << endl;
+			break;
+		case 4:
+			if (flag==1)
+				sortRecords(stud);
+			else
+				cout << "Empty Records !" << endl;
+			break;
+		default :
+			cout<<"Please Select Valid Option !"<<endl;
+		}
+	}
 	return 0;
 }

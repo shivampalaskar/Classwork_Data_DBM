@@ -2,13 +2,16 @@
  * Student.h
  *
  *  Created on: 04-Mar-2020
- *      Author: sunbeam
+ *      Author: Shivam Palaskar
  */
 
+extern int SIZE;
 #ifndef SRC_STUDENT_H_
 #define SRC_STUDENT_H_
 #include<iostream>
 #include <string>
+
+
 
 class Student {
 private :
@@ -19,6 +22,7 @@ private :
 	double percent;
 public:
 	//Student();
+	int getRollNo();
 	void acceptStudentDetails();
 	void printStudentDetails();
 	void calculatePercent();

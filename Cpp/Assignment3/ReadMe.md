@@ -1,4 +1,4 @@
-#CPP Assignment 3
+# CPP Assignment 3
 
 1) Write a class for Time and provide the functionality 
   Time()

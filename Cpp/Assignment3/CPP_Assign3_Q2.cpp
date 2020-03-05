@@ -13,7 +13,6 @@ using namespace std;
 class Matrix{
 private :
 	int** mtrx1;
-	int** mtrx2;
 public :
 	Matrix();
 	Matrix(int,int);
@@ -35,13 +34,8 @@ Matrix::Matrix() {
 	for (int i = 0; i < 2; ++i)
 		mtrx1[i] = new int[2];
 
-	mtrx2 = new int*[2];
-	for (int i = 0; i < 2; ++i)
-		mtrx2[i] = new int[2];
-
 	for (int i = 0; i < 2; i++) {
 		for (int j = 0; j < 2; j++) {
-			mtrx1[i][j] = i+j;
 			mtrx1[i][j] = i+j;
 		}
 	}
@@ -51,11 +45,6 @@ Matrix::Matrix(int row,int col) {
 	mtrx1 = new int*[row];
 	for (int i = 0; i < col; ++i)
 		mtrx1[i] = new int[row];
-
-	mtrx2 = new int*[col];
-	for (int i = 0; i < col; ++i)
-		mtrx2[i] = new int[col];
-
 }
 
 void Matrix::add(Matrix &arr1, Matrix &arr2) {
@@ -65,7 +54,7 @@ void Matrix::add(Matrix &arr1, Matrix &arr2) {
 	for (i = 0; i < 2; i++) {
 		for (j = 0; j < 2; j++) {
 
-			sum[i][j] = arr1.mtrx1[i][j] + arr2.mtrx2[i][j];
+			sum[i][j] = arr1.mtrx1[i][j] + arr2.mtrx1[i][j];
 		}
 	}
 	for (i = 0; i < 2; i++) {
@@ -81,7 +70,7 @@ void Matrix::add(Matrix &arr1, Matrix &arr2) {
 int main() {
 	Matrix m1;
 	Matrix m2;
-	//m1.printMatrix();
+	m1.printMatrix();
 
 	cout<<"Matrix addition is :"<<endl;
 		m1.add(m1,m2);

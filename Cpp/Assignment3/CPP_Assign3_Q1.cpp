@@ -64,14 +64,20 @@ void Time::print_date(){
 	time_t now;
 	time(&now);
 	struct tm *local = localtime(&now);
+
 	cout<<"Current Date : ";
 	cout<<local->tm_mday<<"-"<<local->tm_mon + 1<<"-"<<local->tm_year + 1900<<endl;
 }
+
 int main() {
-	Time currTime;
-	cout<<"Current Time : "<<currTime.getHour()<<"-"<<currTime.getMinute()<<"-"<<currTime.getSeconds()<<endl;
-	Time userTime(7,15,34);
-	cout<<"Entered Time : "<<userTime.getHour()<<"-"<<userTime.getMinute()<<"-"<<userTime.getSeconds()<<endl;
-	currTime.print_date();
+	int len;
+	cout<<"Enter Number of Object : ";
+	cin>>len;
+	Time *arrObj = new Time[len];
+	cout << "Current Time : " << arrObj[0].getHour() << "-"<< arrObj[0].getMinute() << "-" << arrObj[0].getSeconds() << endl;
+
+	Time *arrObj1 = new Time(7,25,14);
+	cout << "Entered Time : " << arrObj1->getHour() << "-"<< arrObj1->getMinute() << "-" << arrObj1->getSeconds() << endl;
+	arrObj[0].print_date();
 	return 0;
 }

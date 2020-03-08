@@ -16,12 +16,14 @@ Employee::Employee() {
 	this->sal=0;
 }
 
-Employee::Employee(int id,float sal,const char *dept,Date date) {
+Employee::Employee(int id,float sal,const char *dept,Date date,const char* name,const char *addr,Date birth_date) {
 	strcpy(this->dept,dept);
 	this->id=id;
 	this->sal=sal;
 	this->joiningDate=date;
-	Person::accept();
+	this->setName(name);
+	this->setAddr(addr);
+	this->setBirthDate(birth_date);
 }
 
 const char* Employee::getDept() {

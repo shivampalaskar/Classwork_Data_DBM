@@ -16,7 +16,7 @@ class Employee : public Person{
 	Date joiningDate;
 public:
 	Employee();
-	Employee(int id,float sal,const char *dept,Date date);
+	Employee(int id,float sal,const char *dept,Date date,const char*,const char*,Date);
 	const char* getDept();
 	void setDept(const char* dept);
 	int getId();

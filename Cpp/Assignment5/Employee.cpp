@@ -57,7 +57,6 @@ void Employee::setSal(float sal) {
 
 void Employee::display(){
 	cout<<"ID : "<<this->id<<endl;
-	cout<<"Name : ";
 	cout<<"Department : "<<this->dept<<endl;
 	cout<<"Salary : "<<this->sal<<endl;
 	cout<<"Joining Date: ";

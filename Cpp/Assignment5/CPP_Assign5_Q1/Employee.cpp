@@ -16,7 +16,7 @@ Employee::Employee() {
 	this->sal=0;
 }
 
-Employee::Employee(int id,float sal,const char *dept,Date date) {
+Employee::Employee(int id,float sal,const char *dept,Date& date) {
 	strcpy(this->dept,dept);
 	this->id=id;
 	this->sal=sal;

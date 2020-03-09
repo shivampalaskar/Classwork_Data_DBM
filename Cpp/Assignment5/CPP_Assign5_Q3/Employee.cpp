@@ -36,7 +36,6 @@ void Employee::setSal(float sal) {
 }
 
 void Employee::accept() {
-	cout << "Enter Details : " << endl;
 	cout << "ID : ";
 	cin>>this->id;
 	cout << "Salary : ";
@@ -46,6 +45,7 @@ void Employee::display() {
 	cout << "ID : " << this->id << endl;
 	cout << "Salary : " << this->sal << endl;
 }
+
 Employee::~Employee() {
 }
 

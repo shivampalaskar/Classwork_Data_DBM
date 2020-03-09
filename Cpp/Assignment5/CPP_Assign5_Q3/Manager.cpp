@@ -11,14 +11,10 @@ using namespace std;
 
 Manager::Manager() {
 	this->bonus=0;
-	this->setId(0);
-	this->setSal(0);
 }
 
-Manager::Manager(int id,float sal,float bonus) {
+Manager::Manager(int id,float sal,float bonus) : Employee(id,sal){
 	this->bonus = bonus;
-	this->setId(id);
-	this->setSal(sal);
 }
 
 float Manager::getBonus() {
@@ -40,8 +36,7 @@ void Manager::accept(){
 }
 
 void Manager::display_manager() {
-	cout << "Bonus : " << this->bonus;
-	cout << endl;
+	cout << "Bonus : " << this->bonus<<endl;
 }
 
 void Manager::accept_manager() {

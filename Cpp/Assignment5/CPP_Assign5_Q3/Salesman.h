@@ -9,7 +9,7 @@
 #ifndef SRC_Salesman_H_
 #define SRC_Salesman_H_
 
-class Salesman : public Employee {
+class Salesman : virtual public Employee {
 	float comm;
 public:
 	Salesman();
@@ -18,10 +18,10 @@ public:
 	void setcomm(float comm);
 	void display();
 	void accept();
+	~Salesman();
+protected:
 	void display_Salesman();
 	void accept_Salesman();
-	~Salesman();
-
 };
 
 #endif /* SRC_Salesman_H_ */

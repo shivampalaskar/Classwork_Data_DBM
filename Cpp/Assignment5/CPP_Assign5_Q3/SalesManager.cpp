@@ -6,22 +6,24 @@
  */
 
 #include "SalesManager.h"
+#include "Employee.h"
+#include "Salesman.h"
+#include "Manager.h"
 
 SalesManager::SalesManager() {
 }
-SalesManager::SalesManager(int id ,float sal,float bonus ,float comm){
-	Manager::setId(id);
-	//Salesman::setId(id);
-	Manager::setBonus(bonus);
-	Salesman::setcomm(comm);
+
+SalesManager::SalesManager(int id ,float sal,float bonus ,float comm) : Employee(id,sal),Manager(id,sal,bonus),Salesman(id,sal,comm) {
 }
 
 void SalesManager::display(){
-	Manager::display();
+	Employee::display();
+	Manager::display_manager();
 	Salesman::display_Salesman();
 }
 void SalesManager::accept(){
-	Manager::accept();
+	Employee::accept();
+	Manager::accept_manager();
 	Salesman::accept_Salesman();
 }
 

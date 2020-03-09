@@ -10,7 +10,7 @@
 #ifndef SRC_SALESMANAGER_H_
 #define SRC_SALESMANAGER_H_
 
-class SalesManager : public Manager,Salesman{
+class SalesManager : public Salesman,Manager{
 public:
 	SalesManager();
 	SalesManager(int,float,float,float);

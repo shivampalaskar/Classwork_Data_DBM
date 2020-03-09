@@ -9,7 +9,7 @@
 #ifndef SRC_MANAGER_H_
 #define SRC_MANAGER_H_
 
-class Manager : public Employee {
+class Manager : virtual public Employee {
 	float bonus;
 public:
 	Manager();
@@ -18,9 +18,10 @@ public:
 	void setBonus(float bonus);
 	void display();
 	void accept();
+	~Manager();
+protected :
 	void display_manager();
 	void accept_manager();
-	~Manager();
 
 };
 

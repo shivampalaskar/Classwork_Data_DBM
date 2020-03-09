@@ -11,14 +11,10 @@ using namespace std;
 
 Salesman::Salesman() {
 	this->comm=0;
-	this->setId(0);
-	this->setSal(0);
 }
 
-Salesman::Salesman(int id,float sal,float comm) {
+Salesman::Salesman(int id,float sal,float comm) : Employee(id,sal){
 	this->comm = comm;
-	this->setId(id);
-	this->setSal(sal);
 }
 
 float Salesman::getcomm() {
@@ -40,8 +36,7 @@ void Salesman::accept(){
 }
 
 void Salesman::display_Salesman() {
-	cout << "comm : " << this->comm;
-	cout << endl;
+	cout << "comm : " << this->comm<<endl;
 }
 
 void Salesman::accept_Salesman() {

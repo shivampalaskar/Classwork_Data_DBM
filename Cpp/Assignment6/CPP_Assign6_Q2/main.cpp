@@ -27,35 +27,60 @@ int menuList(){
 	return choice;
 }
 
+float calc_Area(Shape *ptrShape[],int count){
+	float tarea=0;
+	for(int i=0;i<count;i++){
+		tarea+=ptrShape[i]->cal_area();
+	}
+	return tarea;
+}
+
+float calc_Peri(Shape *ptrShape[], int count) {
+	float tperi = 0;
+	for (int i = 0; i < count; i++) {
+		tperi += ptrShape[i]->cal_peri();
+	}
+	return tperi;
+}
+
 int main(){
 	//Shape s; // cannot declare variable ‘s’ to be of abstract type ‘Shape’
-	int choice;
-	Shape *ptrShape;
-	while((choice = menuList())!=0){
+	int choice,count=0;
+	Shape *ptrShape[5];
+	while((choice = menuList())!=0 && count < 5){
 		switch(choice){
 		case 1 :
-			ptrShape = new Circle();
+			ptrShape[count] = new Circle;
+			ptrShape[count]->accept();
+			count++;
 			break;
 		case 2 :
-			ptrShape = new Rectangle();
+			ptrShape[count] = new Rectangle;
+			ptrShape[count]->accept();
+			count++;
 			break;
 		case 3 :
-			ptrShape = new Square();
+			ptrShape[count] = new Square();
+			ptrShape[count]->accept();
+			count++;
 			break;
 		case 4 :
-			ptrShape = new Equilateral_Triangle();
+			ptrShape[count] = new Equilateral_Triangle();
+			ptrShape[count]->accept();
+			count++;
 			break;
 		case 5:
-			ptrShape = new Hexagon();
+			ptrShape[count] = new Hexagon();
+			ptrShape[count]->accept();
+			count++;
 			break;
 		}
-		ptrShape->accept();
-		ptrShape->display();
-		float area = ptrShape->cal_area();
-		float perimeter = ptrShape->cal_peri();
-		cout<<"Area : "<<area<<endl;
-		cout<<"Perimeter : "<<perimeter<<endl;
 	}
-	delete ptrShape;
+	float tarea = calc_Area(ptrShape,count);
+	float tperimeter = calc_Peri(ptrShape,count);
+	cout << "TotalArea : " << tarea << endl;
+	cout << "Total Perimeter : " << tperimeter << endl;
+	for(int i=0;i<count;i++)
+		delete ptrShape[i];
 	return 0;
 }

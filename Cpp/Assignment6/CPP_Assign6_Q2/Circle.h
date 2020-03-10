@@ -13,6 +13,7 @@ class Circle : public Shape{
 public:
 	Circle();
 	Circle(float);
+
 	float getRadius();
 	void setRadius(float radius);
 
@@ -20,6 +21,7 @@ public:
 	void display();
 	float cal_area();
 	float cal_peri();
+
 	~Circle();
 };
 

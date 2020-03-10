@@ -49,7 +49,6 @@ int main(){
 			ptrShape = new Hexagon();
 			break;
 		}
-
 		ptrShape->accept();
 		ptrShape->display();
 		float area = ptrShape->cal_area();
@@ -57,5 +56,6 @@ int main(){
 		cout<<"Area : "<<area<<endl;
 		cout<<"Perimeter : "<<perimeter<<endl;
 	}
+	delete ptrShape;
 	return 0;
 }

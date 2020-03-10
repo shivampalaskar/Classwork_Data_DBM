@@ -15,6 +15,7 @@ public:
 	Circle(float);
 	float getRadius();
 	void setRadius(float radius);
+
 	void accept();
 	void display();
 	float cal_area();

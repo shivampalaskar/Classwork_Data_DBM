@@ -15,7 +15,7 @@ public:
 	virtual float cal_area()=0;
 	virtual float cal_peri()=0;
 	Shape();
-	~Shape();
+	virtual ~Shape();
 };
 
 #endif /* SRC_SHAPE_H_ */

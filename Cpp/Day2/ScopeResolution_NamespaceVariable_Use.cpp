@@ -30,9 +30,9 @@ int main() {
 	cout<<"ns2 Variable num1 : "<<ns2::num1<<endl;
 
 	using namespace ns1;
-	cout<<"ns1 Variable num1 : "<<num1<<endl;
+	cout<<"ns1 Variable num1 : "<<num1<<endl; // preference will be given to local variable
 	using namespace ns2;
-	cout<<"ns2 Variable num1 : "<<num1<<endl;
-
+	cout<<"ns2 Variable num1 : "<<num1<<endl; // preference will be given to local variable
+						  // Need to use :: explicitly
 	return 0;
 }
